@@ -1,0 +1,17 @@
+{
+  "domain": "becker_centronic_plus",
+  "name": "Becker Centronic Plus",
+  "codeowners": ["@honsma235"],
+  "config_flow": true,
+  "documentation": "https://github.com/honsma235/hass-becker-centronic-plus",
+  "issue_tracker": "https://github.com/honsma235/hass-becker-centronic-plus/issues",
+  "iot_class": "local_push",
+  "requirements": ["pybeckerplus @ git+https://github.com/honsma235/pybeckerplus.git@v0.2.0"],
+  "version": "0.1.0",
+  "usb": [
+    {
+      "vid": "2638",
+      "pid": "0030"
+    }
+  ]
+}

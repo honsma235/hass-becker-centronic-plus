@@ -1,0 +1,45 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Becker Centronic Plus Setup",
+        "description": "Select the serial port for your Becker USB stick.",
+        "data": {
+          "port": "Serial Port"
+        }
+      },
+      "discovery_confirm": {
+        "title": "Becker Centronic Plus",
+        "description": "Do you want to set up the Becker Centronic Plus USB stick discovered on {port}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect: {error_detail}"
+    },
+    "abort": {
+      "single_instance_allowed": "Only a single instance of Becker Centronic Plus is allowed."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "rssi": { "name": "RSSI" }
+    },
+    "binary_sensor": {
+      "blocked": { "name": "Blocked" },
+      "overheated": { "name": "Overheated" }
+    },
+    "switch": {
+      "fly_screen_protection": { "name": "Fly screen protection" }
+    },
+    "button": {
+      "preset_1": { "name": "Go to Preset 1" },
+      "preset_2": { "name": "Go to Preset 2" },
+      "identify": { "name": "Identify" }
+    }
+  },
+  "device": {
+    "becker": {
+      "name": "Becker Centronic PLUS USB Dongle"
+    }
+  }
+}
