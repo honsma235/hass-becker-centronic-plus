@@ -7,7 +7,12 @@
   "documentation": "https://github.com/honsma235/hass-becker-centronic-plus",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/honsma235/hass-becker-centronic-plus/issues",
+  "loggers": [
+    "custom_components.becker_centronic_plus",
+    "pybeckerplus"
+  ],
   "requirements": ["pybeckerplus@git+https://github.com/honsma235/pybeckerplus.git@v0.2.0"],
+  "single_config_entry": true,
   "usb": [
     {
       "vid": "2638",
