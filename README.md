@@ -20,8 +20,8 @@ This custom integration allows you to control Becker Centronic Plus shutter moto
 ## Requirements
 
 - **Hardware**: Becker Centronic Plus USB stick (ordering code `4036 200 001 0` or `4036 000 009 0`).
-   > [!IMPORTANT]
-   > This integration does **not** work with the older **non-Plus** Centronic USB sticks (`4035 200 041 0` or `4035 000 041 0`)!
+> [!IMPORTANT]
+> This integration does **not** work with the older **non-Plus** Centronic USB sticks (`4035 200 041 0` or `4035 000 041 0`)!
 
 ## Known Limitations
 
@@ -29,11 +29,11 @@ This custom integration allows you to control Becker Centronic Plus shutter moto
 - It likely does not yet support the **EVO 20 R PLUS** series or sun protection drives of the **Cxx PLUS** series.   
    > Support for additional Centronic Plus drive series could be added if their request/response protocol is analyzed.
 - Does not support pairing the Becker USB stick with covers or performing initial commissioning. This functionality is not yet implemented to ensure setup reliability.
-   > [!TIP]
-   > Pairing and initial commissioning (e.g., setting end-stop positions) can be performed using a computer or mobile device with the [Becker Tool](https://l.ead.me/beypHO) app, available on the Microsoft Store, Google Play Store, and Apple App Store.
+> [!TIP]
+> Pairing and initial commissioning (e.g., setting end-stop positions) can be performed using a computer or mobile device with the [Becker Tool](https://l.ead.me/beypHO) app, available on the Microsoft Store, Google Play Store, and Apple App Store.
 
-   > [!CAUTION]
-   > Configuring end-stops is a critical task. Incorrect settings can lead to hardware damage. It is your responsibility to ensure you follow the manufacturer's instructions or consider hiring a professional installer.
+> [!CAUTION]
+> Configuring end-stops is a critical task. Incorrect settings can lead to hardware damage. It is your responsibility to ensure you follow the manufacturer's instructions or consider hiring a professional installer.
 
 ## Installation
 
