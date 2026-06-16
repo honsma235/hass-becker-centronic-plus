@@ -34,7 +34,8 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
-CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN) # type: ignore[attr-defined]
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)  # type: ignore[attr-defined]
+
 
 async def async_setup(hass: HomeAssistant, _config: ConfigType) -> bool:
     """Set up the Becker Centronic Plus integration."""
