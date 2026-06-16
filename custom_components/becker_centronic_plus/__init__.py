@@ -13,6 +13,7 @@ from homeassistant.components.cover import DOMAIN as COVER_DOMAIN
 from homeassistant.config_entries import UnknownEntry
 from homeassistant.core import Event, HomeAssistant, callback
 from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import service
 from homeassistant.helpers.device_registry import format_mac
@@ -33,6 +34,7 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN) # type: ignore[attr-defined]
 
 async def async_setup(hass: HomeAssistant, _config: ConfigType) -> bool:
     """Set up the Becker Centronic Plus integration."""
