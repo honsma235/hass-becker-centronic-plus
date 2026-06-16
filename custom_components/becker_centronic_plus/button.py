@@ -1,21 +1,18 @@
 """Buttons for Becker Centronic Plus."""
 
 import logging
-from typing import TYPE_CHECKING
 
 from homeassistant.components.button import ButtonDeviceClass, ButtonEntity
 from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import DeviceInfo, format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from propcache.api import cached_property
 from pybeckerplus import Action, BeckerClient, CentronicPlusDevice
 
 from .const import DOMAIN, BeckerConfigEntry, async_signal_device_update
 from .entity import BeckerCentronicPlusEntity
-
-if TYPE_CHECKING:
-    from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 _LOGGER = logging.getLogger(__name__)
 

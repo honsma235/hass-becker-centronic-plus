@@ -1,7 +1,5 @@
 """Sensors for Becker Centronic Plus."""
 
-from typing import TYPE_CHECKING
-
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
@@ -11,14 +9,12 @@ from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from propcache.api import cached_property
+from pybeckerplus import BeckerClient, CentronicPlusDevice
 
 from .const import BeckerConfigEntry, async_signal_device_update
 from .entity import BeckerCentronicPlusEntity
-
-if TYPE_CHECKING:
-    from homeassistant.helpers.entity_platform import AddEntitiesCallback
-    from pybeckerplus import BeckerClient, CentronicPlusDevice
 
 
 async def async_setup_entry(

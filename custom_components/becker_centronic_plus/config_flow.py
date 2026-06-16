@@ -1,19 +1,16 @@
 """Config flow for Becker Centronic Plus."""
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.config_entries import SOURCE_RECONFIGURE
+from homeassistant.config_entries import SOURCE_RECONFIGURE, ConfigFlowResult
 from homeassistant.helpers.device_registry import format_mac
+from homeassistant.helpers.service_info.usb import UsbServiceInfo
 from pybeckerplus import BeckerClient, BeckerError
 
 from .const import CONF_PORT, DOMAIN
-
-if TYPE_CHECKING:
-    from homeassistant.config_entries import ConfigFlowResult
-    from homeassistant.helpers.service_info.usb import UsbServiceInfo
 
 _LOGGER = logging.getLogger(__name__)
 

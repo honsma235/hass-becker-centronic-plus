@@ -1,17 +1,13 @@
 """Base entity for Becker Centronic Plus."""
 
-from typing import TYPE_CHECKING
-
 from homeassistant.core import callback
 from homeassistant.helpers.device_registry import DeviceInfo, format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import Entity
 from propcache.api import cached_property
+from pybeckerplus import BeckerClient, CentronicPlusDevice
 
 from .const import DOMAIN, async_signal_device_update
-
-if TYPE_CHECKING:
-    from pybeckerplus import BeckerClient, CentronicPlusDevice
 
 
 class BeckerCentronicPlusEntity(Entity):

@@ -9,7 +9,7 @@ dependencies = [
 
 # The ruff config is based on https://github.com/ludeeus/integration_blueprint/blob/main/.ruff.toml
 [tool.ruff]
-target-version = "py314"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = [ "ALL" ]

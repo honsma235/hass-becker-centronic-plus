@@ -1,7 +1,7 @@
 """Covers for Becker Centronic Plus."""
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from homeassistant.components.cover import (
     CoverDeviceClass,
@@ -11,6 +11,7 @@ from homeassistant.components.cover import (
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from propcache.api import cached_property
 from pybeckerplus import Action, BeckerClient, CentronicPlusDevice
 
@@ -18,9 +19,6 @@ from .const import BeckerConfigEntry, async_signal_device_update
 from .entity import BeckerCentronicPlusEntity
 
 _LOGGER = logging.getLogger(__name__)
-
-if TYPE_CHECKING:
-    from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 
 async def async_setup_entry(

@@ -6,7 +6,6 @@ library to Home Assistant entities and device registry.
 """
 
 import logging
-from typing import TYPE_CHECKING
 
 import voluptuous as vol
 from homeassistant.components.cover import DOMAIN as COVER_DOMAIN
@@ -18,6 +17,7 @@ from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import service
 from homeassistant.helpers.device_registry import format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_send
+from homeassistant.helpers.typing import ConfigType
 from pybeckerplus import BeckerClient, CentronicPlusDevice
 
 from .const import (
@@ -28,9 +28,6 @@ from .const import (
     BeckerConfigEntry,
     async_signal_device_update,
 )
-
-if TYPE_CHECKING:
-    from homeassistant.helpers.typing import ConfigType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -94,7 +91,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: BeckerConfigEntry) -> bo
                     "Becker USB stick disconnected during unload: %s", exception
                 )
                 return
-        except AttributeError, RuntimeError:
+        except (AttributeError, RuntimeError):
             pass
 
         _LOGGER.warning("Becker USB stick disconnected: %s", exception)

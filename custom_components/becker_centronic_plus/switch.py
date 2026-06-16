@@ -1,20 +1,18 @@
 """Switches for Becker Centronic Plus."""
 
-from typing import TYPE_CHECKING, Any, NamedTuple
+from typing import Any, NamedTuple
 
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from propcache.api import cached_property
 from pybeckerplus import Action, BeckerClient, CentronicPlusDevice
 
 from .const import BeckerConfigEntry, async_signal_device_update
 from .entity import BeckerCentronicPlusEntity
-
-if TYPE_CHECKING:
-    from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 
 class _BeckerToggleSwitchDescription(NamedTuple):

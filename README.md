@@ -38,10 +38,10 @@ This custom integration allows you to control Becker Centronic Plus shutter moto
 ## Installation
 
 ### Option 1: HACS (Recommended)
-1. Open HACS in Home Assistant.
-2. Click the three dots in the top right and select **Custom repositories**.
-3. Add this repository URL and select **Integration** as the category.
-4. Click **Install**.
+1. Open [HACS](https://www.hacs.xyz/) in Home Assistant.
+2. Click the three dots in the top right corner and select **Custom repositories**.
+3. Paste the URL of this repository, select **Integration** as the category, and click **Add**.
+4. The integration will now appear in HACS. Click on it and select **Download**.
 5. Restart Home Assistant.
 
 ### Option 2: Manual
