@@ -1,25 +1,37 @@
 """Diagnostics support for Becker Centronic Plus."""
+
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from homeassistant.components.diagnostics import async_redact_data
-from homeassistant.core import HomeAssistant
+if TYPE_CHECKING:
+    from homeassistant.core import HomeAssistant
 
-from .const import BeckerConfigEntry
+    from .const import BeckerConfigEntry
 
-TO_REDACT = {"unique_id", "mac_id", "serial_number"}
 
 async def async_get_config_entry_diagnostics(
-    hass: HomeAssistant, entry: BeckerConfigEntry
+    hass: HomeAssistant,  # noqa: ARG001
+    entry: BeckerConfigEntry,
 ) -> dict[str, Any]:
     """Return diagnostics for a config entry."""
-    client = entry.runtime_data
+    client = entry.runtime_data.client
 
-    return async_redact_data(
-        {
-            "fw_version": client.stick_fw,
-            "install_id": client.stick_install_id,
-        },
-        TO_REDACT,
-    )
+    return {
+        "port": client.port,
+        "discovery_info": entry.data.get("discovery_info"),
+        "fw_version": client.stick_fw,
+        "devices": [
+            {
+                "name": device.name,
+                "rssi": device.rssi,
+                "firmware_version": device.firmware_version,
+                "available": device.available,
+                "got_status": device._got_status,  # noqa: SLF001 # pyright: ignore[reportPrivateUsage]
+                "position": device.position,
+                "blocked": device.blocked,
+                "overheated": device.overheated,
+            }
+            for device in client.devices.values()
+        ],
+    }

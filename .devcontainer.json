@@ -1,0 +1,66 @@
+{
+    "name": "HA ${localWorkspaceFolderBasename} Dev Container",
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "postCreateCommand": "scripts/setup",
+    "forwardPorts": [
+        8123
+    ],
+    "portsAttributes": {
+        "8123": {
+            "label": "Home Assistant",
+            "onAutoForward": "notify"
+        }
+    },
+    "runArgs": [
+        "--privileged",
+        "-v", "/dev:/dev",
+        "-v", "/run/udev:/run/udev:ro",
+        "--group-add=dialout"
+    ],
+    "containerUser": "root",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "charliermarsh.ruff",
+                "github.vscode-pull-request-github",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ryanluker.vscode-coverage-gutters"
+            ],
+            "settings": {
+                "files.eol": "\n",
+                "editor.tabSize": 4,
+                "editor.formatOnPaste": true,
+                "editor.formatOnSave": true,
+                "editor.formatOnType": false,
+                "files.trimTrailingWhitespace": true,
+                "python.analysis.typeCheckingMode": "strict",
+                "python.analysis.autoImportCompletions": true,
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff",
+                    "editor.codeActionsOnSave": {
+                        "source.fixAll.ruff": "explicit",
+                        "source.organizeImports.ruff": "explicit"
+                    }
+                }
+            }
+        }
+    },
+    "containerEnv": {
+        // Enable asyncio debug mode for easier debugging of async code
+        "PYTHONASYNCIODEBUG": "1",
+        // Ensure Python output is sent straight to terminal (e.g. for logging)
+        "PYTHONUNBUFFERED": "1",
+        // Prevent Python from writing .pyc files to disk
+        "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "remoteUser": "vscode",
+    "features": {
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.14"
+        },
+        "ghcr.io/devcontainers-extra/features/apt-packages:1": {
+            "packages": "ffmpeg,libturbojpeg0,libpcap-dev"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+CONFIG_DIR="${PWD}/config"
+
+if [[ -d "$CONFIG_DIR" ]]; then
+    echo "Clearing Home Assistant configuration directory: $CONFIG_DIR"
+    echo "Preserving configuration.yaml..."
+
+    # Delete all files and directories inside 'config' except 'configuration.yaml'
+    # -mindepth 1 ensures we don't delete the 'config' directory itself
+    # -maxdepth 1 ensures we target top-level items for recursive removal
+    find "$CONFIG_DIR" -mindepth 1 -maxdepth 1 ! -name 'configuration.yaml' -exec rm -rf {} +
+
+    echo "Cleanup complete."
+else
+    echo "Config directory does not exist. Nothing to clear."
+fi

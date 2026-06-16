@@ -1,28 +1,38 @@
 """Base entity for Becker Centronic Plus."""
+
+from typing import TYPE_CHECKING
+
 from homeassistant.core import callback
-from homeassistant.helpers.device_registry import format_mac
-from homeassistant.helpers.entity import DeviceInfo, Entity
+from homeassistant.helpers.device_registry import DeviceInfo, format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
-from pybeckerplus import CentronicDevice, BeckerClient
+from homeassistant.helpers.entity import Entity
+from propcache.api import cached_property
+
 from .const import DOMAIN, async_signal_device_update
+
+if TYPE_CHECKING:
+    from pybeckerplus import BeckerClient, CentronicPlusDevice
+
 
 class BeckerCentronicPlusEntity(Entity):
     """Base class for Becker Centronic Plus entities."""
 
     _attr_has_entity_name = True
 
-    def __init__(self, client: BeckerClient, device: CentronicDevice, entry_id: str) -> None:
+    def __init__(
+        self, client: BeckerClient, device: CentronicPlusDevice, entry_id: str
+    ) -> None:
         """Initialize the entity."""
         self._client = client
         self._device = device
         self._entry_id = entry_id
 
-    @property
+    @cached_property
     def available(self) -> bool:
         """Return True if both the stick is connected and the device is known."""
         return self._client.connected and self._device.available
 
-    @property
+    @cached_property
     def device_info(self) -> DeviceInfo:
         """Return device information."""
         return DeviceInfo(
@@ -37,6 +47,7 @@ class BeckerCentronicPlusEntity(Entity):
 
     async def async_added_to_hass(self) -> None:
         """Register callbacks."""
+        await super().async_added_to_hass()
         self.async_on_remove(
             async_dispatcher_connect(
                 self.hass,
@@ -54,7 +65,7 @@ class BeckerCentronicPlusEntity(Entity):
         )
 
     @callback
-    def _update_callback(self, device: CentronicDevice) -> None:
+    def _update_callback(self, device: CentronicPlusDevice) -> None:
         """Update the entity state."""
         self._device = device
         self.async_write_ha_state()

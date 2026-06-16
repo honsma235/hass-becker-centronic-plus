@@ -8,22 +8,32 @@ on:
     branches:
       - "main"
 
-permissions: {}
+permissions:
+  contents: read # access to check out code and install dependencies
 
 jobs:
-  ruff:
-    name: "Ruff"
+  lint:
+    name: "Lint"
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout the repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Lint
-        uses: astral-sh/ruff-action@v4.0.0
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
-          args: "check ."
+          python-version-file: "pyproject.toml"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Install the project
+        run: uv sync --locked --all-extras --dev
+
+      - name: Lint
+        run: uv run ruff check
 
       - name: Format
-        uses: astral-sh/ruff-action@v4.0.0
-        with:
-          args: "format . --check"
+        run: uv run ruff format --check

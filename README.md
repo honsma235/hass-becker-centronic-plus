@@ -10,8 +10,8 @@ This custom integration allows you to control Becker Centronic Plus shutter moto
 - **Cover Support**: Full control of shutters including open, close, stop, and absolute position (0-100%).
 - **Status Feedback**: Real-time position and state updates via intelligent backoff polling.
 - **Advanced Controls**:
-  - **Fly Screen Protection**: Toggle via a switch entity.
-  - **Presets**: Buttons to trigger "Preset 1" and "Preset 2".
+  - **Fly Screen Protection** and **Anti-freeze protection**: Toggle via a switch entity.
+  - **Presets**: Buttons to trigger "Preset 1" and "Preset 2" (Intermediate Positions). Actions to set and delete.
   - **Identify**: Button to make the motor "jog" for identification.
 - **Diagnostics**: Sensors for "Blocked" and "Overheated" states.
 - **Name Sync**: Changing a device name in Home Assistant automatically syncs the name to the Becker hardware.
@@ -19,14 +19,14 @@ This custom integration allows you to control Becker Centronic Plus shutter moto
 
 ## Requirements
 
-- **Hardware**: Becker Centronic Plus USB stick (ordering code `4036 200 001 0` or `4036 000 009 0`).
+- **Hardware**: Becker Centronic Plus USB stick (ordering codes `4036 200 001 0` or `4036 000 009 0`).
 > [!IMPORTANT]
 > This integration does **not** work with the older **non-Plus** Centronic USB sticks (`4035 200 041 0` or `4035 000 041 0`)!
 
 ## Known Limitations
 
 - Currently only tested with roller shutter drives of the **C01 PLUS** series.
-- It likely does not yet support the **EVO 20 R PLUS** series or sun protection drives of the **Cxx PLUS** series.   
+- It likely does not yet support the **EVO 20 R PLUS** series or sun protection drives of the **Cxx PLUS** series.
    > Support for additional Centronic Plus drive series could be added if their request/response protocol is analyzed.
 - Does not support pairing the Becker USB stick with covers or performing initial commissioning. This functionality is not yet implemented to ensure setup reliability.
 > [!TIP]
@@ -51,12 +51,32 @@ This custom integration allows you to control Becker Centronic Plus shutter moto
 ## Configuration
 
 1. **USB Discovery**: Plug in your Becker USB stick. Home Assistant should automatically notify you that a new device has been discovered. Follow the prompts to configure it.
-   > If your USB stick is not auto-discovered, please open an issue or PR with the hardware attributes found in **Settings** -> **System** -> **Hardware** -> **All hardware**.
+   > If your USB stick is not auto-discovered, please open an issue or PR with the hardware attributes of your stick found in **Settings** -> **System** -> **Hardware** -> **All hardware**.
 2. **Manual Setup**:
    - Go to **Settings** -> **Devices & Services**.
    - Click **Add Integration**.
    - Search for **Becker Centronic Plus** and configure it.
-   - Select the correct serial port (e.g., `/dev/serial/by-id/usb-Becker-Antriebe_GmbH_CentronicPlus_Stick-if00`).
+   - Select the correct serial port (`/dev/serial/by-id/usb-Becker-Antriebe_GmbH_CentronicPlus_Stick-if00` should work).
+
+## Removing the integration
+
+This integration follows standard integration removal. No extra steps are required.
+
+## Actions
+
+The integration provides the following actions for cover entities.
+
+### Action: `becker_centronic_plus.set_preset`
+
+Stores the current position of the cover as a preset (Intermediate Position) in the motor's memory.
+
+- **Data attribute**: `preset`
+    - **Description**: The preset number to set (1 or 2).
+    - **Required**: Yes
+
+### Action: `becker_centronic_plus.delete_preset`
+
+Deletes both preset positions (Intermediate Position 1 and 2) from the motor's memory.
 
 
 ## Troubleshooting

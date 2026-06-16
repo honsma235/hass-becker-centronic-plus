@@ -9,4 +9,14 @@ build/
 .vscode/
 .idea/
 .DS_Store
+.ruff_cache
+.coverage
+coverage.xml
 TODO
+
+# Local caches
+.cache/
+
+# Home Assistant configuration
+config/*
+!config/configuration.yaml
