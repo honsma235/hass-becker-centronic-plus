@@ -946,7 +946,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pybeckerplus", git = "https://github.com/honsma235/pybeckerplus.git?rev=v0.3.1" }]
+requires-dist = [{ name = "pybeckerplus", git = "https://github.com/honsma235/pybeckerplus.git?rev=v0.3.2" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -1461,8 +1461,8 @@ wheels = [
 
 [[package]]
 name = "pybeckerplus"
-version = "0.3.1"
-source = { git = "https://github.com/honsma235/pybeckerplus.git?rev=v0.3.1#7f092f01b2ffaba96e6edd36da8ede5d404ad24d" }
+version = "0.3.2"
+source = { git = "https://github.com/honsma235/pybeckerplus.git?rev=v0.3.2#bb337a411642975179a4f2e42a276341d722d23c" }
 dependencies = [
     { name = "serialx" },
 ]
