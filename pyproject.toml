@@ -34,9 +34,9 @@ max-complexity = 25
 dev = [
     "aioesphomeapi>=45.3.1",
     "colorlog>=6.10.1",
-    "homeassistant>=2026.5.4",
+    "homeassistant>=2026.6.4",
     "isal>=1.8.0",
-    "ruff>=0.15.16",
+    "ruff>=0.15.19",
     "uv>=0.5.29",
     "zlib-ng>=1.0.0",
 ]
