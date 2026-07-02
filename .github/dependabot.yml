@@ -4,7 +4,8 @@ updates:
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "cron"
+      cronjob: "0 0 8 * *"
     cooldown:
       default-days: 7
     groups:
@@ -15,7 +16,8 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "cron"
+      cronjob: "0 0 8 * *"
     cooldown:
       default-days: 7
     groups:
@@ -26,7 +28,8 @@ updates:
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "cron"
+      cronjob: "0 0 8 * *"
     cooldown:
       default-days: 7
     groups:

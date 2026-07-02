@@ -3,7 +3,7 @@ name: Validate
 on:
   workflow_dispatch:
   schedule:
-    - cron:  "0 0 1 * *" # montly (1st)
+    - cron:  "0 0 10 * *" # montly (1st)
   push:
     branches:
       - main
