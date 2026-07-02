@@ -97,6 +97,7 @@ recorder:
 logger:
   default: info
   logs:
+    #homeassistant.util.package: debug
     #homeassistant.components.usb: debug
     #homeassistant.helpers.translation: debug
     custom_components.becker_centronic_plus: debug

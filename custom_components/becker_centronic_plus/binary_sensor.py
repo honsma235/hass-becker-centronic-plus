@@ -9,7 +9,6 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from propcache.api import cached_property
 from pybeckerplus import BeckerClient, CentronicPlusDevice
 
 from .const import BeckerConfigEntry, async_signal_device_update
@@ -60,10 +59,10 @@ class BeckerProblemSensor(BeckerCentronicPlusEntity, BinarySensorEntity):
         # the check/OK shown by Home Assistant corresponds to the "good" state.
         self._attr_translation_key = f"{problem_type}"
         self._attr_unique_id = f"{format_mac(device.mac_id)}-{problem_type}"
+        self._attr_is_on = getattr(device, problem_type, False)
 
-    @cached_property
-    def is_on(self) -> bool | None:
-        """Return the sensor state."""
-        # Invert the underlying problem flag so the entity is ON when there
-        # is no problem (so the UI shows the check/OK as a positive state).
-        return getattr(self._device, self._type, False)
+    @callback
+    def _update_callback(self, device: CentronicPlusDevice) -> None:
+        """Update the entity state and check if we need to poll."""
+        self._attr_is_on = getattr(device, self._type, False)
+        super()._update_callback(device)

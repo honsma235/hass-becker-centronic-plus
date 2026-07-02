@@ -10,7 +10,6 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from propcache.api import cached_property
 from pybeckerplus import BeckerClient, CentronicPlusDevice
 
 from .const import BeckerConfigEntry, async_signal_device_update
@@ -51,8 +50,10 @@ class BeckerRSSISensor(BeckerCentronicPlusEntity, SensorEntity):
         """Initialize the sensor."""
         super().__init__(client, device, entry_id)
         self._attr_unique_id = f"{format_mac(device.mac_id)}-rssi"
+        self._attr_native_value = device.rssi
 
-    @cached_property
-    def native_value(self) -> int | None:
-        """Return the RSSI signal strength."""
-        return self._device.rssi
+    @callback
+    def _update_callback(self, device: CentronicPlusDevice) -> None:
+        """Update the entity state and check if we need to poll."""
+        self._attr_native_value = device.rssi
+        super()._update_callback(device)

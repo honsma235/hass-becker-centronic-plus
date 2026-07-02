@@ -6,6 +6,7 @@ library to Home Assistant entities and device registry.
 """
 
 import logging
+from typing import Any
 
 import voluptuous as vol
 from homeassistant.components.cover import DOMAIN as COVER_DOMAIN
@@ -60,6 +61,7 @@ async def async_setup(hass: HomeAssistant, _config: ConfigType) -> bool:
 async def async_setup_entry(hass: HomeAssistant, entry: BeckerConfigEntry) -> bool:  # noqa: PLR0915
     """Set up Becker Centronic Plus from a config entry."""
     known_devices: set[str] = set()
+    device_state_cache: dict[str, dict[str, Any]] = {}
 
     def _sync_name(mac_id: str, new_name: str | None) -> None:
         """Schedule a background task to push the name to hardware if it differs."""
@@ -108,13 +110,46 @@ async def async_setup_entry(hass: HomeAssistant, entry: BeckerConfigEntry) -> bo
                 "Config entry %s no longer exists; skipping reload", entry.entry_id
             )
 
+    def _filter_complex_types(attrs: dict[str, Any]) -> dict[str, Any]:
+        """Filter out complex objects for cleaner logging."""
+        return {
+            k: v
+            for k, v in attrs.items()
+            if isinstance(v, (str, int, float, bool, type(None)))
+        }
+
     @callback
     def _on_device_update(device: CentronicPlusDevice) -> None:
         """Forward library callbacks to Home Assistant dispatcher."""
+        if _LOGGER.isEnabledFor(logging.DEBUG):
+            if device.mac_id in device_state_cache:
+                old_attrs = device_state_cache[device.mac_id]
+                new_attrs = _filter_complex_types(device.__dict__)
+                changed_attrs = {
+                    key: (old_attrs.get(key), new_attrs.get(key))
+                    for key in new_attrs
+                    if old_attrs.get(key) != new_attrs.get(key)
+                }
+                if changed_attrs:
+                    _LOGGER.debug(
+                        "Device update from %s. Changes: %s",
+                        device.mac_id,
+                        changed_attrs,
+                    )
+                else:
+                    _LOGGER.debug("Device update from %s. No changes", device.mac_id)
+
+            # Update the cache with the latest state
+            device_state_cache[device.mac_id] = _filter_complex_types(device.__dict__)
+
         # Discovery: only signal once per MAC per entry to avoid race conditions
         if device.mac_id not in known_devices:
             known_devices.add(device.mac_id)
-            _LOGGER.debug("Discovered new Becker device: %s", device.mac_id)
+            _LOGGER.debug(
+                "Discovered new Becker device: %s. Attributes: %s",
+                device.mac_id,
+                _filter_complex_types(device.__dict__),
+            )
 
             # Sync custom name from HA registry to hardware on first discovery
             dev_reg = dr.async_get(hass)

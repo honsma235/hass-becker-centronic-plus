@@ -12,7 +12,6 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import format_mac
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from propcache.api import cached_property
 from pybeckerplus import Action, BeckerClient, CentronicPlusDevice
 
 from .const import BeckerConfigEntry, async_signal_device_update
@@ -53,6 +52,7 @@ class BeckerCover(BeckerCentronicPlusEntity, CoverEntity):
         | CoverEntityFeature.STOP
         | CoverEntityFeature.SET_POSITION
     )
+    _attr_is_closed: bool | None = None
 
     def __init__(
         self, client: BeckerClient, device: CentronicPlusDevice, entry_id: str
@@ -60,35 +60,23 @@ class BeckerCover(BeckerCentronicPlusEntity, CoverEntity):
         """Initialize the cover."""
         super().__init__(client, device, entry_id)
         self._attr_unique_id = format_mac(device.mac_id)
+        # Set initial position
+        self._attr_current_cover_position = 100 - round(device.position)
         self._last_action: Action | None = None
+        self._attr_is_closed = device.lower_limit
+        self._attr_is_opening = False
+        self._attr_is_closing = False
 
     @callback
     def _update_callback(self, device: CentronicPlusDevice) -> None:
         """Update the entity state and check if we need to poll."""
-        super()._update_callback(device)
+        self._attr_current_cover_position = 100 - round(device.position)
+        self._attr_is_closed = device.lower_limit
+        self._attr_is_opening = device.moving and self._last_action == Action.UP
+        self._attr_is_closing = device.moving and self._last_action == Action.DOWN
         if not self._device.moving:
             self._last_action = None
-
-    @cached_property
-    def current_cover_position(self) -> int | None:
-        """Return current position of cover. HA: 0 closed, 100 open."""
-        # Library: 0 is open, 100 is closed. Invert for HA.
-        return 100 - int(self._device.position)
-
-    @cached_property
-    def is_closed(self) -> bool | None:
-        """Return if the cover is closed."""
-        return self._device.lower_limit
-
-    @cached_property
-    def is_opening(self) -> bool | None:
-        """Return if the cover is opening."""
-        return self._device.moving and self._last_action == Action.UP
-
-    @cached_property
-    def is_closing(self) -> bool | None:
-        """Return if the cover is closing."""
-        return self._device.moving and self._last_action == Action.DOWN
+        super()._update_callback(device)
 
     async def async_open_cover(self, **_kwargs: Any) -> None:
         """Open the cover."""
