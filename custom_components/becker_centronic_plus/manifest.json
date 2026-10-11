@@ -16,7 +16,7 @@
     "pybeckerplus"
   ],
   "requirements": [
-    "pybeckerplus@git+https://github.com/honsma235/pybeckerplus.git@v0.3.2"
+    "pybeckerplus@git+https://github.com/honsma235/pybeckerplus.git@v0.3.3"
   ],
   "single_config_entry": true,
   "usb": [
@@ -25,5 +25,5 @@
       "pid": "0030"
     }
   ],
-  "version": "0.1.3"
+  "version": "0.1.4"
 }

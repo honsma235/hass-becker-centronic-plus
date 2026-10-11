@@ -34,7 +34,7 @@ class BeckerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         finally:
             try:
                 await client.close()
-            except Exception:  # noqa: BLE001 - defensive close; don't mask original exceptions
+            except Exception:
                 _LOGGER.debug(
                     "Error closing BeckerClient for %s", serial_port, exc_info=True
                 )
