@@ -36,7 +36,7 @@ class BeckerCentronicPlusEntity(Entity):
             name=self._device.name or f"Becker {self._device.mac_id[-4:]}",
             manufacturer="Becker",
             model="Centronic Plus Shutter",
-            via_device=(DOMAIN, format_mac(self._client.stick_mac)),
+            via_device_id=format_mac(self._client.stick_mac),
             sw_version=self._device.firmware_version,
             serial_number=self._device.serial_number,
         )
