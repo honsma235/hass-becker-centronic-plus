@@ -32,11 +32,11 @@ max-complexity = 25
 
 [dependency-groups]
 dev = [
-    "aioesphomeapi>=45.5.2",
-    "colorlog>=6.10.1",
-    "homeassistant>=2026.5.4",
+    "aioesphomeapi>=46.6.0",
+    "colorlog>=6.12.0",
+    "homeassistant>=2026.9.4",
     "isal>=1.8.0",
-    "ruff>=0.15.20",
+    "ruff>=0.16.10",
     "uv>=0.5.29",
     "zlib-ng>=1.0.0",
 ]
